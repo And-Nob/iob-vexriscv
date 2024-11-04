@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 IObundle
+//
+// SPDX-License-Identifier: MIT
+
 package vexriscv.demo
 
 import spinal.core._
@@ -18,6 +22,7 @@ object VexRiscvAxi4LinuxPlicClint{
       val cpuConfig = VexRiscvConfig(
         plugins = List(
           new IBusCachedPlugin(
+            resetVector = 0x40000000l,
             prediction = NONE,
             compressedGen = true,
             injectorStage = true,
@@ -63,7 +68,7 @@ object VexRiscvAxi4LinuxPlicClint{
             )
           ),
           new MmuPlugin(
-            ioRange      = _(31 downto 28) === 0xF
+            ioRange = _(31) === True
           ),
           new DecoderSimplePlugin(
             catchIllegalInstruction = true
